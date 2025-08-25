@@ -1,15 +1,21 @@
-import React from 'react';
+import React, {memo, useCallback } from 'react';
 
-const Cell = ({ value, onClick, isClickable }) => {
-  const getBackgroundColor = () => {
-    if (value === null) return '#2c3e50'; // Пустая клетка
-    return '#3498db'; // Обычная клетка
-  };
+const Cell = memo(({ value, onClick, isClickable }) => 
+{
+  console.log(`Cell ${value} render:`, value, isClickable);
+  const getBackgroundColor = useCallback(() => 
+  {
+    if (value === null) 
+      return 'rgba(44, 62, 80, 1)'; // Пустая клетка
+    return 'rgba(52, 152, 219, 1)'; // Обычная клетка
+  });
 
-  const getHoverColor = () => {
-    if (value === null) return '#2c3e50';
-    return '#2980b9';
-  };
+  const getHoverColor = useCallback(() => 
+  {
+    if (value === null) 
+      return 'rgba(44, 62, 80, 1)';
+    return 'rgba(41, 128, 185, 1)';
+  });
 
   return (
     <button
@@ -51,8 +57,10 @@ const Cell = ({ value, onClick, isClickable }) => {
       }}
       
       // Для hover эффектов в React лучше использовать onMouseEnter/onMouseLeave
-      onMouseEnter={(e) => {
-        if (isClickable && value !== null) {
+      onMouseEnter={(e) => 
+      {
+        if (isClickable && value !== null) 
+        {
           e.target.style.backgroundColor = getHoverColor();
           e.target.style.transform = 'translateY(-2px)';
           e.target.style.boxShadow = '0 6px 12px rgba(0, 0, 0, 0.3)';
@@ -70,6 +78,6 @@ const Cell = ({ value, onClick, isClickable }) => {
       {value !== null ? value : ''}
     </button>
   );
-};
+});
 
 export default Cell;
